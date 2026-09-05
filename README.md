@@ -1,5 +1,5 @@
 ﻿# Sistema Simulato POS Ristorante
-
+ciaoo
 ### Progetto finale di Nwafuleze Diandra per il corso di Epicode OOP
 
 ## Panoramica dell'Applicazione e Funzionalità

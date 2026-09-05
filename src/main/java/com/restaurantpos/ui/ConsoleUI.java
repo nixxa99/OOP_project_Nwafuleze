@@ -64,9 +64,10 @@ public class ConsoleUI {
             System.out.println(e.getMessage());
             System.out.println("Creazione di un nuovo menù vuoto.");
 
-            MenuCategory root = new MenuCategory("Menu Principale");
-            root.add(MenuItemFactory.createItem("Spaghetti al Pomodoro", 10.0, true));
-            root.add(MenuItemFactory.createItem("Bistecca alla Fiorentina", 25.0, false));
+            MenuCategory root = new MenuCategory("Menù Principale");
+            root.add(MenuItemFactory.createItem("Spaghetti al pomodoro", 10.0, true));
+            root.add(MenuItemFactory.createItem("Bistecca alla fiorentina", 25.0, false));
+            root.add(MenuItemFactory.createItem("Gnocchi burro e salvia", 9.0, true));
             RestaurantManager.getInstance().setMainMenu(root);
         }
     }

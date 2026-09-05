@@ -58,6 +58,18 @@ Le funzionalità principali includono:
 3. Individuare la classe `Main` in `src/main/java/com/restaurantpos/Main.java`.
 4. Eseguire il metodo `main`.
 
+### Esecuzione tramite CLI con Maven
+
+Dalla cartella principale del progetto, contenente `pom.xml`, eseguire:
+```bash
+mvn compile exec:java -Dexec.mainClass=com.restaurantpos.Main
+```
+
+Con Windows PowerShell utilizzare:
+```powershell
+mvn compile exec:java "-Dexec.mainClass=com.restaurantpos.Main"
+```
+
 ### Esecuzione dei Test
 I test possono essere eseguiti direttamente tramite il test runner integrato dell'IDE scelto o tramite CLI Maven:
 ```bash

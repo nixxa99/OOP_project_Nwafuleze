@@ -1,0 +1,15 @@
+# Maven build output
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Runtime-generated files
+application.log
+menu_data.dat
+*.log.*
+
+# Operating system files
+.DS_Store
+Thumbs.db

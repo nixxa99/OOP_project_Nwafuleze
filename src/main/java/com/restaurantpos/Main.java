@@ -9,12 +9,12 @@ public class Main {
         try {
             ConsoleUI ui = new ConsoleUI();
             ui.start();
+            LoggerManager.logInfo("System shut down normally.");
         } catch (Exception e) {
             // Permette di gestire gli errori di caricamento senza causare crash di sistema
-            LoggerManager.logError("Errore imprevisto di sistema:  ", e);
-            System.out.println("Si è verificato un errore critico nel sistema");
+            LoggerManager.logError("Errore imprevisto di sistema:", e);
+            System.err.println("Si è verificato un errore critico nel sistema.");
+            System.exit(1);
         }
-        LoggerManager.logInfo("System shut down normally.");
-        System.exit(0);
     }
 }

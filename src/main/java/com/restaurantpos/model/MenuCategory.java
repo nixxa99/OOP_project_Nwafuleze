@@ -17,10 +17,6 @@ public class MenuCategory implements MenuComponent {
         components.add(component);
     }
 
-    public void remove(MenuComponent component) {
-        components.remove(component);
-    }
-
     public List<MenuComponent> getComponents() {
         return components;
     }

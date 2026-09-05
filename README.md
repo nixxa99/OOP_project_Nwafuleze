@@ -53,7 +53,7 @@ Le funzionalità principali includono:
 - Maven (o un IDE con supporto Maven integrato come IntelliJ IDEA).
 
 ### Esecuzione tramite IDE
-1. Aprire la cartella del progetto (`oop_nwafuleze`) nel proprio IDE di scelta.
+1. Aprire la cartella del progetto (`OOP_project_Nwafuleze`) nel proprio IDE di scelta.
 2. Consentire all'IDE di risolvere le dipendenze tramite il file `pom.xml`.
 3. Individuare la classe `Main` in `src/main/java/com/restaurantpos/Main.java`.
 4. Eseguire il metodo `main`.

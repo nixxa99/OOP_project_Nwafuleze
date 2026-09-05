@@ -16,7 +16,7 @@ Le funzionalità principali includono:
 ## Tecnologie e Pattern Utilizzati
 
 ### Pattern di Progettazione utilizzati
-- **Factory Pattern (`MenuItemFactory`)**: Utilizzato per incapsulare la logica di istanziazione degli oggetti `MenuItem`. Centralizza la creazione degli oggetti, rendendo più semplice l'aggiunta di nuovi piatti in futuro senza modificare la logica principale di business.
+- **Factory Pattern (`MenuItemFactory`)**: Utilizzato per incapsulare la logica di istanzziazione degli oggetti `MenuItem`. Centralizza la creazione degli oggetti, rendendo più semplice l'aggiunta di nuovi piatti in futuro senza modificare la logica principale di business.
 
 - **Composite Pattern (`MenuComponent`, `MenuCategory`, `MenuItem`)**: Utilizzato per rappresentare la struttura gerarchica del menù. Permette al sistema di trattare i singoli elementi (foglie) e le categorie di elementi (compositi) in modo uniforme, semplificando operazioni come la stampa dell'intero albero del menù.
 
@@ -66,6 +66,150 @@ mvn clean test
 
 ## Diagrammi UML
 
+### Class Diagram
+```mermaid
+classDiagram
+    class Main
+    class ConsoleUI
+    class RestaurantManager {
+      -RestaurantManager instance
+      -MenuCategory mainMenu
+      -boolean isHappyHourActive
+      +getInstance() RestaurantManager
+    }
+
+    class MenuComponent {
+      <<interface>>
+      +getName() String
+      +getPrice() double
+      +isVegetarian() boolean
+      +print(indent) void
+    }
+    class MenuCategory
+    class MenuItem
+    class Order {
+      -int tableNumber
+      -List~MenuComponent~ items
+      -DiscountStrategy discountStrategy
+      +addItem(item) void
+      +calculateTotal() double
+      +setDiscountStrategy(strategy) void
+    }
+
+    class MenuItemFactory {
+      +createItem(name, price, isVegetarian) MenuItem
+    }
+
+    class MenuIterator {
+      <<interface>>
+    }
+    class DietaryIterator
+
+    class DiscountStrategy {
+      <<interface>>
+      +applyDiscount(baseTotal) double
+    }
+    class HappyHourStrategy
+    class NoDiscountStrategy
+
+    class MenuStorageUtil
+    class InputValidator
+    class LoggerManager
+
+    class SystemException
+    class DataStorageException
+
+    Main --> ConsoleUI : avvia
+    Main ..> LoggerManager : log
+    ConsoleUI --> RestaurantManager
+    ConsoleUI ..> MenuStorageUtil
+    ConsoleUI ..> InputValidator
+    ConsoleUI ..> MenuItemFactory
+    ConsoleUI ..> DietaryIterator
+    ConsoleUI ..> Order
+    ConsoleUI ..> HappyHourStrategy
+
+    RestaurantManager *-- MenuCategory : mainMenu
+
+    MenuComponent <|.. MenuCategory
+    MenuComponent <|.. MenuItem
+    MenuCategory *-- "0..*" MenuComponent : components
+    Order *-- "0..*" MenuComponent : items
+
+    MenuIterator <|.. DietaryIterator
+    DietaryIterator ..> MenuCategory
+
+    DiscountStrategy <|.. HappyHourStrategy
+    DiscountStrategy <|.. NoDiscountStrategy
+    Order --> DiscountStrategy : strategy
+
+    MenuItemFactory ..> MenuItem : crea
+
+    DataStorageException --|> SystemException
+    MenuStorageUtil ..> DataStorageException : throws
+    MenuStorageUtil ..> LoggerManager : log
+    InputValidator ..> LoggerManager : log
+```
+
+### Architectural Diagram
+```mermaid
+flowchart LR
+    U[Utente CLI] --> UI[ConsoleUI]
+    M[Main] --> UI
+    M --> LOG[LoggerManager]
+
+    subgraph Presentation Layer
+      M
+      UI
+    end
+
+    subgraph Application Layer
+      RM[RestaurantManager Singleton]
+    end
+
+    subgraph Domain Layer
+      CMP[MenuComponent / MenuCategory / MenuItem\nComposite]
+      ORD[Order]
+      STR[DiscountStrategy + impl\nStrategy]
+      IT[MenuIterator + DietaryIterator\nIterator]
+      FAC[MenuItemFactory\nFactory]
+    end
+
+    subgraph Infrastructure Layer
+      INP[InputValidator]
+      STO[MenuStorageUtil]
+      EXC[DataStorageException / SystemException]
+      LOG
+    end
+
+    subgraph External Artifacts
+      DAT[(menu_data.dat)]
+      APPLOG[(application.log)]
+      TST[RestaurantTest - JUnit]
+    end
+
+    UI --> RM
+    RM --> CMP
+    UI --> ORD
+    ORD --> CMP
+    ORD --> STR
+
+    UI --> INP
+    UI --> STO
+    UI --> IT
+    UI --> FAC
+
+    STO --> DAT
+    STO --> EXC
+    STO --> LOG
+    INP --> LOG
+    LOG --> APPLOG
+
+    TST -. testa .-> FAC
+    TST -. testa .-> CMP
+    TST -. testa .-> ORD
+    TST -. testa .-> IT
+```
 
 
 ## Limitazioni Note e Possbili Sviluppi Futuri

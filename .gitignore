@@ -7,7 +7,6 @@ target/
 
 # Runtime-generated files
 application.log
-menu_data.dat
 *.log.*
 
 # Operating system files
